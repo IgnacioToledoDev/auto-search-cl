@@ -1,0 +1,20 @@
+{
+  "condition": "usado",
+  "budgetMaxClp": 12000000,
+  "budgetIdealClp": 9500000,
+  "makesPreferred": ["Suzuki", "Toyota", "Kia"],
+  "makesExcluded": ["Chery"],
+  "modelsPreferred": ["Swift", "Yaris"],
+  "bodyTypes": ["Hatchback", "SUV"],
+  "fuels": ["Bencina"],
+  "transmissions": ["Automática"],
+  "yearMin": 2018,
+  "kmMax": 80000,
+  "regions": ["Metropolitana"],
+  "comunas": ["Providencia", "Ñuñoa"],
+  "mustHaves": ["un dueño", "mantenciones al día"],
+  "dealBreakers": ["chocado", "salvataje"],
+  "sellerTypePreference": "any",
+  "ufClp": 39000,
+  "weights": { "price": 30, "spec": 25, "condition": 25, "seller": 20 }
+}

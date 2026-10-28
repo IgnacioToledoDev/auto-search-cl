@@ -1,6 +1,7 @@
 node_modules/
 data/*
 !data/.gitkeep
+!data/profile.example.json
 output/
 *.log
 .DS_Store
