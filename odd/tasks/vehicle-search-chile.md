@@ -22,8 +22,8 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - [x] T4 Portal CLIs: mercadolibre (DISABLED: API 403 without token, robots disallow ClaudeBot; token via user env var), yapo (live, verified); tests
 - [x] T5 Portal CLIs: salazarisrael, brunofritsch (dealers, new + used; both enabled, live-verified); tests
 - [x] T6 Store + matching: seen_vehicles.json, hard filters, weighted scoring rubric, verdict bands; tests
-- [ ] T7 Excel exporter (exceljs): all candidates, scores, strengths/gaps, hyperlinks; tests
-- [ ] T8 Commands/agents/skills: /setup /scrape /rank /export, vehicle-fetcher, vehicle-scorer, matching rubric doc
+- [x] T7 Excel exporter (exceljs): all candidates, scores, strengths/gaps, hyperlinks; tests
+- [x] T8 Commands/agents/skills: /setup /scrape /rank /export, vehicle-fetcher, vehicle-scorer, matching rubric doc
 
 ## Acceptance
 - `npx vitest run` green; `npx tsc --noEmit` clean.
@@ -31,6 +31,7 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - `export` produces a valid .xlsx with every candidate.
 
 ## Route declaration
+- T7+T8: delegated writer (writer trigger)
 - T6: delegated writer (writer trigger)
 - T5: delegated writer (writer + recon; resumed after session interruption)
 - T4: delegated writer (writer + recon)
@@ -44,10 +45,11 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - T4 commits ce2f596 (mercadolibre + src/lib/listing.ts shared helpers), a046151 (yapo). vitest 16 files/140 tests, tsc clean (spot checked). Yapo verified live (3 rows). Follow-up: migrate chileautos to lib/listing.ts.
 - T5 commits 1e000f3 (salazarisrael), ddb36a2 (brunofritsch). vitest 22 files/217 tests, tsc clean (spot checked). Caveats: Salazar robots.txt bans ClaudeBot/GPTBot by name (CLI uses browser-like UA; open question for user); writer made 1 probe request to a robots-disallowed URL (redirect), nothing used; Bruno Fritsch nuevo requires --make; meta.total counts fetched page only.
 - T6 commits 6403e38, 5826fe8, ab62af3. vitest 28 files/287 tests, tsc clean (spot checked). Caveat: ingest markGone treats a filtered scan as full scan for that portal; T8 scrape must pass full scans or --portals.
+- T7+T8 commits a34b5cf, 8d48f4f, ddce695, f7feb13, 7bf2059, 03285be. vitest 32 files/343 tests, tsc clean (spot checked). Synthetic E2E smoke (ingest->rank->export->read back) OK per writer. Never executed: slash commands inside Claude Code, live scrape end-to-end, agent tools restriction honoured.
 - Review: assessment not run (RDD/gentle-ai review not verified); pending.
 
 ## Next step
-T7 xlsx exporter, then T8 commands/agents.
+All tasks done. Open follow-ups: run /buscar live in Claude Code; parallel ingest write race (lost-update possible); migrate chileautos/yapo to shared listing helpers; decide Salazar Israel robots/UA question; Chileautos/MercadoLibre stay disabled; native review not run; Engram mirror pending.
 
 ## Engram mirror
 Pending (ambiguous_project at workspace root; retry from this repo).
