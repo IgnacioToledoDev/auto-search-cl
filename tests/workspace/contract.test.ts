@@ -46,7 +46,7 @@ describe("commands", () => {
   });
 
   it("every portal CLI the commands can discover exists for each SKILL.md", () => {
-    for (const portal of readdirSync(join(ROOT, "src/portals"))) {
+    for (const portal of readdirSync(join(ROOT, "src/portals"), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)) {
       expect(existsSync(join(ROOT, `src/portals/${portal}/SKILL.md`)), portal).toBe(true);
       expect(existsSync(join(ROOT, `src/portals/${portal}/cli.ts`)), portal).toBe(true);
       expect(frontmatter(read(`src/portals/${portal}/SKILL.md`))?.enabled, portal).toMatch(/^(true|false)$/);

@@ -1,12 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsx src/portals/*/cli.ts*)",
-      "Bash(npx tsx src/export/*.ts*)",
-      "Bash(npx tsx src/export.ts*)",
+      "Bash(npx tsx src/portals/*/cli.ts:*)",
+      "Bash(npx tsx src/store/cli.ts:*)",
+      "Bash(npx tsx src/export/cli.ts:*)",
+      "Bash(npx tsx src/matching/validate-profile.ts:*)",
+      "Write(data/profile.json)",
       "Read",
       "Glob",
       "Grep"
+    ],
+    "ask": [
+      "Edit(.claude/commands/**)",
+      "Edit(.claude/agents/**)",
+      "Edit(.claude/skills/**)",
+      "Edit(.claude/settings.json)",
+      "Write(.claude/**)"
     ]
   }
 }
