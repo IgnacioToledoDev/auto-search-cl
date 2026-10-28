@@ -1,4 +1,11 @@
-export type CliErrorCode = "UNKNOWN_FLAG" | "BAD_ARG" | "MISSING_REQUIRED" | "API_ERROR";
+export type CliErrorCode =
+  | "UNKNOWN_FLAG"
+  | "BAD_ARG"
+  | "MISSING_REQUIRED"
+  | "API_ERROR"
+  | "STORE_ERROR"
+  | "PROFILE_ERROR"
+  | "NOT_FOUND";
 
 export class CliError extends Error {
   readonly code: CliErrorCode;
