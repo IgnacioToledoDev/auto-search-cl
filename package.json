@@ -1,0 +1,22 @@
+{
+  "name": "auto-search-cl",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Claude Code workspace to search new/used vehicles in Chile and export candidates to Excel",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "node-html-parser": "^9.0.5",
+    "zod": "^4.6.7"
+  }
+}

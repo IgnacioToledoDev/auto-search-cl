@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsx src/portals/*/cli.ts*)",
+      "Bash(npx tsx src/export/*.ts*)",
+      "Bash(npx tsx src/export.ts*)",
+      "Read",
+      "Glob",
+      "Grep"
+    ]
+  }
+}
