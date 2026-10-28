@@ -16,8 +16,8 @@ In: buyer profile, portal CLIs, dedupe store, hard filters + weighted scoring, x
 Out: purchase negotiation, financing simulation, auto-contacting sellers.
 
 ## Tasks
-- [ ] T1 Scaffold: package.json, tsconfig, vitest, CLAUDE.md, profile template, .claude/settings.json, README
-- [ ] T2 Shared lib: Vehicle schema (zod), htmlFetch (timeout/retry/backoff), stripInvisible/visibleHtml, CLI flag guard, dedupe key; tests
+- [x] T1 Scaffold: package.json, tsconfig, vitest, CLAUDE.md, profile template, .claude/settings.json, README
+- [x] T2 Shared lib: Vehicle schema (zod), htmlFetch (timeout/retry/backoff), stripInvisible/visibleHtml, CLI flag guard, dedupe key; tests
 - [ ] T3 Portal CLI: chileautos (search + detail); tests
 - [ ] T4 Portal CLIs: mercadolibre, yapo; tests
 - [ ] T5 Portal CLIs: salazarisrael, brunofritsch (dealers, new + used); tests
@@ -31,13 +31,15 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - `export` produces a valid .xlsx with every candidate.
 
 ## Route declaration
-(updated per task: inline | delegated + trigger)
+- T1+T2: delegated writer (writer trigger: 2+ non-trivial files)
 
 ## Progress / Evidence
 - 2026-10-28: repo initialized at /home/nocti/workspace/auto-search-cl.
+- T1 commit 13f7552, T2 commit 2d7b94e. Spot check: vitest 6 files/46 tests pass, tsc clean. RED observed by writer (6 files failing before impl).
+- Review: assessment not run (RDD/gentle-ai review not verified); pending.
 
 ## Next step
-T1 scaffold.
+T3 chileautos CLI.
 
 ## Engram mirror
 Pending (ambiguous_project at workspace root; retry from this repo).
