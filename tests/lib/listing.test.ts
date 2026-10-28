@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CliError } from "../../src/lib/cliGuard.ts";
-import { filterVehicles, paginate, renderTable, toSearchOptions } from "../../src/lib/listing.ts";
+import { filterVehicles, paginate, renderTable, slugify, toSearchOptions } from "../../src/lib/listing.ts";
 import type { Vehicle } from "../../src/lib/vehicle.ts";
 
 const base: Vehicle = {
@@ -55,5 +55,14 @@ describe("renderTable", () => {
     const text = renderTable({ meta: { total: 1, page: 1, perPage: 20 }, results: [base] });
     expect(text).toContain("total=1 page=1 perPage=20");
     expect(text).toContain("1 | Toyota Yaris | 2019 | 50000 | 9000000 | usado");
+  });
+});
+
+describe("slugify", () => {
+  it("lowercases, strips accents and joins words with hyphens", () => {
+    expect(slugify("Great Wall")).toBe("great-wall");
+    expect(slugify("  Citroën C3  ")).toBe("citroen-c3");
+    expect(slugify("Mercedes-Benz")).toBe("mercedes-benz");
+    expect(slugify("RAV4")).toBe("rav4");
   });
 });

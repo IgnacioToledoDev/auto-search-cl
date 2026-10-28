@@ -37,6 +37,16 @@ export const SEARCH_SPEC = {
   ],
 };
 
+/** "Citroën C3" -> "citroen-c3": lowercase, accents stripped, non-alphanumerics folded to single hyphens. */
+export function slugify(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const includes = (haystack: string | null, needle: string): boolean =>
   haystack !== null && haystack.toLowerCase().includes(needle.toLowerCase());
 
