@@ -22,6 +22,10 @@ The scorer reads one portal `detail` page per candidate and answers: "beyond pri
 
 Rules: missing information lowers the score (it is a gap); a single serious red flag caps the score at 49; evidence-free enthusiasm in the listing never raises it.
 
+## How the AI score is used
+
+The main thread stores it with `store set-ai`; `store rank` then blends it (30%) with the deterministic score (70%) and maps the result to a verdict: Strong (75+), Good (60+), Moderate (45+), Weak (30+), Poor (below 30). The AI score alone never sets the verdict.
+
 ## Chile-specific notes
 
 - **CLP vs UF**: new cars and some dealers quote UF. The store converts with `ufClp`; check the conversion date. UF changes daily.
