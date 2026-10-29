@@ -1,6 +1,6 @@
 ---
 description: Entrevista al comprador y guarda su perfil en data/profile.json (validado) y en CLAUDE.md
-allowed-tools: Read, Write, Edit, Bash(npx tsx src/matching/validate-profile.ts:*)
+allowed-tools: Read, Write, Edit, Bash(npx tsx src/matching/validate-profile.ts:*), Bash(npx tsx src/matching/budget-from-payment.ts:*)
 ---
 
 # /setup: perfil del comprador
@@ -17,7 +17,10 @@ Tu tarea es conocer qué vehículo busca el usuario y dejar su perfil guardado y
 ## Entrevista (en este orden)
 
 1. Tipo: nuevo, usado o ambos (`condition`: `nuevo` | `usado` | `ambos`).
-2. Presupuesto máximo en CLP (`budgetMaxClp`) y, si lo tiene, presupuesto ideal (`budgetIdealClp`). Si piensa en UF, pide también el valor de la UF de hoy (`ufClp`).
+2. Presupuesto. Pregunta primero: ¿piensa en un precio total máximo, o en una cuota mensual por cierto plazo (crédito)?
+   - **Precio total**: pide el máximo en CLP (`budgetMaxClp`) y, si lo tiene, el ideal (`budgetIdealClp`). Si piensa en UF, pide también el valor de la UF de hoy (`ufClp`).
+   - **Cuota mensual**: pide, de a una pregunta, (a) cuota máxima mensual en CLP y, si tiene, una cuota ideal; (b) plazo en meses; (c) pie en CLP (0 si no hay); (d) tasa de interés anual en % (si no la sabe, propón 15% como supuesto y dile que es aproximado). Calcula cada monto con `npx tsx src/matching/budget-from-payment.ts --monthly <cuota> --months <plazo> --rate <tasa> --down <pie>` (nunca a mano). La cuota máxima da `budgetMaxClp`; la cuota ideal, si la hay, da `budgetIdealClp`. Muestra el cálculo y confirma el precio resultante con el usuario.
+   - Solo `budgetMaxClp` y `budgetIdealClp` se guardan; la cuota, plazo y tasa no son parte del perfil.
 3. Marcas y modelos preferidos (`makesPreferred`, `modelsPreferred`) y marcas que descarta (`makesExcluded`).
 4. Carrocería (`bodyTypes`: sedán, SUV, hatchback, camioneta, etc.).
 5. Combustible (`fuels`: bencina, diésel, híbrido, eléctrico).
