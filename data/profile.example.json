@@ -6,6 +6,7 @@
   "makesExcluded": ["Chery"],
   "modelsPreferred": ["Swift", "Yaris"],
   "bodyTypes": ["Hatchback", "SUV"],
+  "bodyTypeStrict": false,
   "fuels": ["Bencina"],
   "transmissions": ["Automática"],
   "yearMin": 2018,

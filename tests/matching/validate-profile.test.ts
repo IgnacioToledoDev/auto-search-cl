@@ -1,4 +1,4 @@
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -53,5 +53,7 @@ describe("validate-profile", () => {
   it("validates the shipped example profile", async () => {
     const r = await run(["--file", "data/profile.example.json"]);
     expect(r.code).toBe(0);
+    expect(JSON.parse(r.out).profile.bodyTypeStrict).toBe(false);
+    expect(readFileSync("data/profile.example.json", "utf8")).toContain('"bodyTypeStrict"');
   });
 });

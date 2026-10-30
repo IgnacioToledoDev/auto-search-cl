@@ -22,8 +22,13 @@ The ranking has three layers. The code owns the first two; the agent owns the th
 | Used car with km above `kmMax` | `km-too-high` |
 | Region/comuna known and outside the profile | `outside-location` |
 | A `dealBreakers` word in title/description | `deal-breaker:<word>` |
+| `bodyTypeStrict` is true and the body type is a known non-match | `body-type-mismatch` |
 
-Missing data never vetoes. It becomes a flag (`price-unknown`, `year-unknown`, `km-unknown`, `location-unknown`) that a human should check.
+Missing data never vetoes. It becomes a flag (`price-unknown`, `year-unknown`, `km-unknown`, `location-unknown`, `body-type-unknown`) that a human should check.
+
+### Body type resolution
+
+Used by the strict filter and by the soft spec score (`src/matching/bodytype.ts`). Portals label many SUVs as "Automovil" or "Station Wagon", so the order is: (1) make+model table of SUV/crossover and known non-SUV models (extend `MODEL_TABLE`); (2) a specific portal label (SUV, Hatchback, Sedán...) compared with `bodyTypes`; (3) generic or missing label means unknown (flagged, never vetoed). With `bodyTypeStrict` false, body type only affects the spec score.
 
 ## Deterministic dimensions
 

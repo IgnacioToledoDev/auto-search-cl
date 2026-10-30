@@ -76,6 +76,13 @@ describe("commands", () => {
   it("car-setup validates the profile with the validator script", () => {
     expect(read(".claude/commands/car-setup.md")).toContain("src/matching/validate-profile.ts");
   });
+
+  it("car-setup asks whether the body type is a hard requirement and saves bodyTypeStrict", () => {
+    const md = read(".claude/commands/car-setup.md");
+    expect(md).toContain("bodyTypeStrict");
+    expect(md).toContain("filtro duro");
+    expect(md).toContain("filtro blando");
+  });
 });
 
 describe("agents", () => {

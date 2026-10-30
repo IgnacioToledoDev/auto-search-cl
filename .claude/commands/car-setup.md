@@ -23,6 +23,8 @@ Tu tarea es conocer qué vehículo busca el usuario y dejar su perfil guardado y
    - Solo `budgetMaxClp` y `budgetIdealClp` se guardan; la cuota, plazo y tasa no son parte del perfil.
 3. Marcas y modelos preferidos (`makesPreferred`, `modelsPreferred`) y marcas que descarta (`makesExcluded`).
 4. Carrocería (`bodyTypes`: sedán, SUV, hatchback, camioneta, etc.).
+   - Si indicó al menos una carrocería, haz **una** pregunta de seguimiento: "¿Solo ese tipo de carrocería (filtro duro: descarta los demás) o es solo preferencia (filtro blando: solo resta puntos)?". Guarda la respuesta en `bodyTypeStrict` (`true` = filtro duro, `false` = filtro blando). Si no indicó carrocería, deja `bodyTypeStrict` en `false`.
+   - Con filtro duro, la carrocería se deduce primero por marca y modelo (los portales suelen etiquetar los SUV como "Automovil" o "Station Wagon"); si no se puede determinar, el aviso no se descarta, solo se marca para revisión.
 5. Combustible (`fuels`: bencina, diésel, híbrido, eléctrico).
 6. Transmisión (`transmissions`: manual, automática; vacío si le da lo mismo).
 7. Año mínimo (`yearMin`, número o vacío).
