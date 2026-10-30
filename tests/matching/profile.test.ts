@@ -16,6 +16,13 @@ describe("ProfileSchema", () => {
     expect(p.kmMax).toBeNull();
   });
 
+  it("defaults bodyTypeStrict to false and accepts true", () => {
+    const base = { condition: "usado", budgetMaxClp: 1 };
+    expect(ProfileSchema.parse(base).bodyTypeStrict).toBe(false);
+    expect(ProfileSchema.parse({ ...base, bodyTypeStrict: true }).bodyTypeStrict).toBe(true);
+    expect(() => ProfileSchema.parse({ ...base, bodyTypeStrict: "yes" })).toThrow();
+  });
+
   it("rejects an invalid condition and a non-positive budget", () => {
     expect(() => ProfileSchema.parse({ condition: "seminuevo", budgetMaxClp: 1 })).toThrow();
     expect(() => ProfileSchema.parse({ condition: "nuevo", budgetMaxClp: 0 })).toThrow();

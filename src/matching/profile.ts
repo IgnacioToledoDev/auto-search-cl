@@ -22,6 +22,8 @@ export const ProfileSchema = z.object({
   makesExcluded: list(),
   modelsPreferred: list(),
   bodyTypes: list(),
+  /** When true, bodyTypes is a hard requirement: known non-matching body types are vetoed. */
+  bodyTypeStrict: z.boolean().default(false),
   fuels: list(),
   transmissions: list(),
   yearMin: z.number().int().nullable().default(null),
