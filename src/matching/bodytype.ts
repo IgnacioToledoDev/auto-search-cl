@@ -25,7 +25,7 @@ export const MODEL_TABLE: MakeModels[] = [
   { makes: ["opel"], suv: ["crossland", "mokka", "grandland"], other: ["corsa", "astra"] },
   { makes: ["dodge"], suv: ["journey", "durango"], other: ["attitude"] },
   { makes: ["hyundai"], suv: ["tucson", "creta", "kona", "santa fe", "venue", "palisade"], other: ["accent", "grand i10", "i10", "i20", "elantra", "verna"] },
-  { makes: ["kia"], suv: ["sportage", "seltos", "sorento", "soul", "sonet", "niro", "stonic"], other: ["morning", "picanto", "rio", "cerato", "k3"] },
+  { makes: ["kia"], suv: ["sportage", "seltos", "sorento", "soul", "sonet", "niro", "stonic"], other: ["morning", "picanto", "rio", "cerato", "k3", "soluto"] },
   { makes: ["toyota"], suv: ["rav4", "corolla cross", "yaris cross", "land cruiser", "fortuner", "4runner"], other: ["yaris", "aygo", "corolla", "etios", "camry"] },
   { makes: ["mazda"], suv: ["cx-3", "cx-30", "cx-5", "cx-9", "cx-50"], other: ["mazda2", "mazda3", "mazda 2", "mazda 3"] },
   { makes: ["suzuki"], suv: ["vitara", "jimny", "s-cross", "grand vitara", "ignis"], other: ["swift", "dzire", "baleno", "alto", "celerio", "ciaz"] },

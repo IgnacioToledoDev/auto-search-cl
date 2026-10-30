@@ -27,7 +27,7 @@ describe("resolveBodyType: make/model table", () => {
   it.each([
     ["Nissan", "Versa"], ["Chevrolet", "Onix"], ["Kia", "Morning"], ["Fiat", "Uno"], ["Toyota", "Aygo"],
     ["Kia", "Rio"], ["Hyundai", "Grand i10"], ["Suzuki", "Dzire"], ["Suzuki", "Baleno"],
-    ["Hyundai", "Accent"], ["Renault", "Soluto"],
+    ["Hyundai", "Accent"], ["Renault", "Soluto"], ["Kia", "Soluto"],
   ])("%s %s is vetoed for an SUV-only profile", (make, model) => {
     expect(resolveBodyType(vehicle({ make, model, bodyType: "Automovil" }), SUV)).toBe("mismatch");
   });
