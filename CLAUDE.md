@@ -5,24 +5,14 @@ contra el perfil del comprador y exporta los candidatos a Excel.
 
 ## Perfil del comprador
 
-Completa cada `[PLACEHOLDER]` antes de buscar.
-
-- Tipo: [PLACEHOLDER: nuevo / usado / ambos]
-- Presupuesto máximo (CLP): [PLACEHOLDER]
-- Marcas/modelos preferidos: [PLACEHOLDER]
-- Marcas/modelos excluidos: [PLACEHOLDER]
-- Carrocería: [PLACEHOLDER: sedán, SUV, hatchback, camioneta, etc.]
-- Combustible: [PLACEHOLDER: bencina, diésel, híbrido, eléctrico]
-- Transmisión: [PLACEHOLDER: manual / automática / indiferente]
-- Año mínimo: [PLACEHOLDER]
-- Kilometraje máximo: [PLACEHOLDER]
-- Región / comunas: [PLACEHOLDER]
-- Deal-breakers (descartan el aviso): [PLACEHOLDER]
-- Must-haves (imprescindibles): [PLACEHOLDER]
+El perfil del comprador vive en `data/profile.json` y en `CLAUDE.local.md`.
+Ambos están ignorados por git y los crea `/car-setup`; este archivo público
+no contiene datos personales. Claude Code carga `CLAUDE.local.md`
+automáticamente junto con este archivo.
 
 ## Flujo de trabajo
 
-1. `/car-setup`: completar el perfil de arriba.
+1. `/car-setup`: crear el perfil del comprador (local, no versionado).
 2. `/car-scrape`: ejecutar los CLIs de cada portal
    (`npx tsx src/portals/<portal>/cli.ts ...`) y guardar resultados en `data/`.
 3. `/car-rank`: aplicar filtros duros y puntaje ponderado; asignar veredicto.

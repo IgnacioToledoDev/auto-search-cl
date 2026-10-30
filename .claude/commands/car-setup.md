@@ -1,6 +1,6 @@
 ---
-description: Entrevista al comprador y guarda su perfil en data/profile.json (validado) y en CLAUDE.md
-allowed-tools: Read, Write, Edit, Bash(npx tsx src/matching/validate-profile.ts:*), Bash(npx tsx src/matching/budget-from-payment.ts:*)
+description: Entrevista al comprador y guarda su perfil en data/profile.json (validado) y en CLAUDE.local.md
+allowed-tools: Read, Write, Bash(npx tsx src/matching/validate-profile.ts:*), Bash(npx tsx src/matching/budget-from-payment.ts:*)
 ---
 
 # /car-setup: perfil del comprador
@@ -39,5 +39,5 @@ Tu tarea es conocer qué vehículo busca el usuario y dejar su perfil guardado y
 1. Arma el objeto JSON con los nombres de campo indicados (listas como arreglos de texto, números sin separadores, `null` donde no aplica). Muéstraselo resumido y pide confirmación.
 2. Escribe `data/profile.json` con Write. El formato de referencia es `data/profile.example.json`.
 3. Valida: `npx tsx src/matching/validate-profile.ts`. Si devuelve `{"ok":true,...}` sigue; si devuelve un error, corrige el campo indicado con el usuario y vuelve a validar. Nunca dejes un perfil inválido.
-4. Completa la sección "Perfil del comprador" de `CLAUDE.md` reemplazando cada `[PLACEHOLDER...]` por la respuesta del usuario (o "indiferente" si no aplica), con Edit.
+4. Escribe el resumen del perfil en `CLAUDE.local.md` (créalo, o reemplázalo si existe) con Write: encabezado `# Perfil del comprador (local, no versionado)` y una línea `- Campo: valor` por cada dato (o "indiferente" si no aplica). Claude Code carga ese archivo automáticamente. `CLAUDE.md` nunca se modifica, y `CLAUDE.local.md` está ignorado por git: no lo agregues a ningún commit.
 5. Termina con un resumen del perfil y la sugerencia de ejecutar `/car-buscar` (o `/car-scrape`).

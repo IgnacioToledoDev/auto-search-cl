@@ -85,6 +85,38 @@ describe("commands", () => {
   });
 });
 
+describe("privacy", () => {
+  it("CLAUDE.md is public and holds no placeholders or personal values", () => {
+    const md = read("CLAUDE.md");
+    expect(md).not.toContain("[PLACEHOLDER");
+    expect(md).toContain("CLAUDE.local.md");
+    expect(md).toContain("data/profile.json");
+    for (const personal of ["Biobío", "Concepci", "12.000.000", "Ñuble", "Araucan"]) expect(md, personal).not.toContain(personal);
+  });
+
+  it("car-setup writes the profile to CLAUDE.local.md and never edits CLAUDE.md", () => {
+    const md = read(".claude/commands/car-setup.md");
+    expect(md).toContain("CLAUDE.local.md");
+    expect(md).toMatch(/`CLAUDE\.md` (nunca|no se modifica)/);
+    expect(md).not.toMatch(/Edit/);
+    expect(md).not.toMatch(/\[PLACEHOLDER/);
+    const fm = frontmatter(md);
+    expect(fm!["allowed-tools"]).not.toMatch(/\bEdit\b/);
+  });
+
+  it("README no longer describes a real buyer search or points to odd/", () => {
+    const md = read("README.md");
+    expect(md).not.toContain("sur de Chile");
+    expect(md).not.toContain("23 avisos");
+    expect(md).not.toContain("odd/");
+  });
+
+  it(".gitignore keeps personal data and local profile out of git", () => {
+    const lines = read(".gitignore").split("\n").map((l) => l.trim());
+    for (const entry of ["CLAUDE.local.md", "odd/", "data/*", "output/"]) expect(lines, entry).toContain(entry);
+  });
+});
+
 describe("agents", () => {
   it.each(AGENTS)("%s has frontmatter, restricted tools and the untrusted-input rule", (name) => {
     const md = read(`.claude/agents/${name}.md`);
