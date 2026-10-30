@@ -10,7 +10,7 @@ Argumentos: `$ARGUMENTS` (N opcional; `--rescore` vuelve a evaluar aunque ya exi
 
 ## 1. Ranking determinístico
 
-Ejecuta `npx tsx src/store/cli.ts rank`. Si falla con `PROFILE_ERROR`, pide ejecutar `/car-setup`.
+Ejecuta `npx tsx src/store/cli.ts rank`. Antes de puntuar, `rank` vuelve a aplicar los filtros duros del perfil a todos los registros activos: los que ya no los cumplen pasan a `vetoed` (no se puntúan ni aparecen en `list` ni en el Excel) y los vetados que vuelven a cumplirlos se reactivan. La salida es `{"ranked": N, "vetoed": M}`. Si falla con `PROFILE_ERROR`, pide ejecutar `/car-setup`.
 
 ## 2. Elegir candidatos
 
@@ -44,4 +44,4 @@ Ejecuta `npx tsx src/store/cli.ts rank` otra vez para mezclar el puntaje cualita
 
 ## 6. Informe
 
-Muestra el top 10 con `npx tsx src/store/cli.ts list --format table --min-score 0`, cuántos se evaluaron, cuántos `gone`/`unreachable` y las alertas más graves. Sugiere `/car-export`.
+Muestra el top 10 con `npx tsx src/store/cli.ts list --format table --min-score 0`, cuántos se evaluaron, cuántos registros quedaron vetados por los filtros duros (`vetoed` del paso 1), cuántos `gone`/`unreachable` y las alertas más graves. Sugiere `/car-export`.
