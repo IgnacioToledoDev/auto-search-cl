@@ -4,6 +4,7 @@ import { CliError, parseArgs, writeError } from "../lib/cliGuard.ts";
 import { stripInvisible } from "../lib/sanitize.ts";
 import { SearchOutputSchema } from "../lib/vehicle.ts";
 import { loadProfile, DEFAULT_PROFILE_PATH, type Profile } from "../matching/profile.ts";
+import { applyHardFilters } from "../matching/filters.ts";
 import { applyAi, medianComparablePrice, scoreVehicle, type Verdict } from "../matching/score.ts";
 import { ingest } from "./ingest.ts";
 import { DEFAULT_STORE_PATH, loadStore, saveStore, type StoreData, type StoredVehicle } from "./store.ts";
@@ -67,8 +68,23 @@ function cmdIngest(data: StoreData, profile: Profile, input: string, o: Record<s
   });
 }
 
-function cmdRank(data: StoreData, profile: Profile, o: Record<string, string>): { ranked: number } {
+function cmdRank(data: StoreData, profile: Profile, o: Record<string, string>): { ranked: number; vetoed: number } {
   const ufClp = numberOption(o["uf-clp"], "uf-clp", 1) ?? profile.ufClp;
+  // Hard filters are re-applied so records stored before a filter/profile change drop out (or return).
+  let vetoed = 0;
+  for (const r of Object.values(data.vehicles)) {
+    if (r.status === "gone") continue;
+    const result = applyHardFilters(r.vehicle, profile, ufClp);
+    if (result.pass) {
+      r.status = "active";
+      delete r.vetoes;
+      r.flags = result.flags;
+    } else {
+      r.status = "vetoed";
+      r.vetoes = result.vetoes;
+      vetoed++;
+    }
+  }
   const active = Object.values(data.vehicles).filter((r) => r.status === "active");
   const market = active.map((r) => r.vehicle);
   for (const r of active) {
@@ -84,7 +100,7 @@ function cmdRank(data: StoreData, profile: Profile, o: Record<string, string>): 
     r.strengths = final.strengths;
     r.gaps = final.gaps;
   }
-  return { ranked: active.length };
+  return { ranked: active.length, vetoed };
 }
 
 function cmdSetAi(data: StoreData, o: Record<string, string>): { key: string; ai: NonNullable<StoredVehicle["ai"]> } {

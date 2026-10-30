@@ -61,12 +61,13 @@ describe("selectRecords", () => {
     record("B", { score: 90 }),
     record("C", { score: undefined, verdict: undefined }),
     record("D", { score: 70, status: "gone" }),
+    record("V", { score: 99, status: "vetoed" }),
   );
-  it("sorts by score desc, unscored last, excludes gone by default", () => {
+  it("sorts by score desc, unscored last, excludes gone and vetoed by default", () => {
     expect(selectRecords(data, {}).map((r) => r.key)).toEqual(["B", "A", "C"]);
   });
   it("includes gone on request", () => {
-    expect(selectRecords(data, { includeGone: true }).map((r) => r.key)).toEqual(["B", "D", "A", "C"]);
+    expect(selectRecords(data, { includeGone: true }).map((r) => r.key)).toEqual(["V", "B", "D", "A", "C"]);
   });
   it("applies min score (unscored excluded)", () => {
     expect(selectRecords(data, { minScore: 60 }).map((r) => r.key)).toEqual(["B"]);
@@ -176,6 +177,12 @@ describe("candidates sheet", () => {
     const { wb } = await roundTrip(store(record("D", { status: "gone" })), { includeGone: true });
     const ws = wb.getWorksheet("Candidatos")!;
     expect(ws.getRow(2).getCell(headerIndex(ws, "Estado")).value).toBe("Retirado");
+  });
+
+  it("marks vetoed records as Vetado when included", async () => {
+    const { wb } = await roundTrip(store(record("V", { status: "vetoed" })), { includeGone: true });
+    const ws = wb.getWorksheet("Candidatos")!;
+    expect(ws.getRow(2).getCell(headerIndex(ws, "Estado")).value).toBe("Vetado");
   });
 
   it("produces a valid workbook with headers only for an empty store", async () => {

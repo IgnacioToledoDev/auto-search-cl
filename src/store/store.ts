@@ -33,8 +33,10 @@ export const StoredVehicleSchema = z.object({
   priceDropped: z.boolean(),
   firstSeen: z.string(),
   lastSeen: z.string(),
-  status: z.enum(["active", "gone"]),
+  status: z.enum(["active", "gone", "vetoed"]),
   flags: z.array(z.string()),
+  /** Hard-filter veto reasons; present only while status is "vetoed". */
+  vetoes: z.array(z.string()).optional(),
   ai: AiSchema.optional(),
   deterministicScore: z.number().optional(),
   score: z.number().optional(),
@@ -178,6 +180,7 @@ export function upsertVehicle(
   existing.vehicle = mergeVehicle(existing.vehicle, v, existing.vehicle.portal === v.portal);
   existing.lastSeen = stamp;
   existing.status = "active";
+  delete existing.vetoes;
   existing.flags = opts.flags ?? existing.flags;
   refreshPrice(existing, now);
   return { key, status: "updated" };
@@ -190,7 +193,7 @@ export function upsertVehicle(
 export function markGone(data: StoreData, scannedPortals: Set<string>, seen: Set<string>, now: Date = new Date()): number {
   let gone = 0;
   for (const r of Object.values(data.vehicles)) {
-    if (r.status === "gone") continue;
+    if (r.status !== "active") continue;
     for (const s of r.sources) {
       if (scannedPortals.has(s.portal) && !seen.has(seenId(r.key, s.portal))) s.gone = true;
     }

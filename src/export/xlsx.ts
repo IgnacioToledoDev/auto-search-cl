@@ -107,7 +107,7 @@ function candidateRow(r: StoredVehicle): Record<Header, ExcelJS.CellValue> {
     Banderas: text(r.flags.join("; ")),
     "Primera vez visto": new Date(r.firstSeen),
     "Última vez visto": new Date(r.lastSeen),
-    Estado: r.status === "active" ? "Activo" : "Retirado",
+    Estado: r.status === "active" ? "Activo" : r.status === "vetoed" ? "Vetado" : "Retirado",
   };
 }
 

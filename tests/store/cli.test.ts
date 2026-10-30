@@ -85,7 +85,7 @@ describe("store cli", () => {
     await run(["ingest"], searchOutput(vehicle(), vehicle({ id: "2", url: "https://yapo.cl/2", make: "Chery", title: "Chery Tiggo", priceClp: 9_900_000, year: 2012, km: 160_000 })));
     const ranked = await run(["rank"]);
     expect(ranked.code).toBe(0);
-    expect(JSON.parse(ranked.out)).toEqual({ ranked: 2 });
+    expect(JSON.parse(ranked.out)).toEqual({ ranked: 2, vetoed: 0 });
 
     const all = JSON.parse((await run(["list"])).out);
     expect(all).toHaveLength(2);
@@ -97,6 +97,37 @@ describe("store cli", () => {
     expect(strong.map((r: { key: string }) => r.key)).toEqual(["yapo:1"]);
     const min = JSON.parse((await run(["list", "--min-score", String(all[0].score)])).out);
     expect(min).toHaveLength(1);
+  });
+
+  it("rank vetoes stored records that fail the hard filters now, and reactivates them when they pass", async () => {
+    await run(["ingest"], searchOutput(vehicle(), vehicle({ id: "2", url: "https://yapo.cl/2", make: "Suzuki", model: "Vitara", title: "Suzuki Vitara" })));
+    // Profile changes after ingest: SUV only.
+    const strict = { condition: "ambos", budgetMaxClp: 10_000_000, budgetIdealClp: 8_000_000, makesPreferred: ["suzuki"], bodyTypes: ["SUV"], bodyTypeStrict: true };
+    writeFileSync(profilePath, JSON.stringify(strict));
+    const r = await run(["rank"]);
+    expect(JSON.parse(r.out)).toEqual({ ranked: 1, vetoed: 1 });
+    const all = JSON.parse((await run(["list", "--include-gone"])).out);
+    const swift = all.find((x: { key: string }) => x.key === "yapo:1");
+    expect(swift.status).toBe("vetoed");
+    expect(swift.vetoes).toContain("body-type-mismatch");
+    expect(JSON.parse((await run(["list"])).out).map((x: { key: string }) => x.key)).toEqual(["yapo:2"]);
+
+    // Relax the profile: the vetoed record is reactivated and scored.
+    writeFileSync(profilePath, JSON.stringify({ ...strict, bodyTypeStrict: false }));
+    expect(JSON.parse((await run(["rank"])).out)).toEqual({ ranked: 2, vetoed: 0 });
+    const back = JSON.parse((await run(["list"])).out);
+    expect(back).toHaveLength(2);
+    expect(back.find((x: { key: string }) => x.key === "yapo:1").vetoes).toBeUndefined();
+  });
+
+  it("rank never touches gone records", async () => {
+    await run(["ingest"], searchOutput(vehicle()));
+    const data = JSON.parse(readFileSync(storePath, "utf8"));
+    data.vehicles["yapo:1"].status = "gone";
+    writeFileSync(storePath, JSON.stringify(data));
+    writeFileSync(profilePath, JSON.stringify({ condition: "ambos", budgetMaxClp: 1, budgetIdealClp: 1 }));
+    expect(JSON.parse((await run(["rank"])).out)).toEqual({ ranked: 0, vetoed: 0 });
+    expect(JSON.parse(readFileSync(storePath, "utf8")).vehicles["yapo:1"].status).toBe("gone");
   });
 
   it("list --format table prints rows", async () => {

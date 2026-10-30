@@ -143,6 +143,24 @@ describe("markGone", () => {
     expect(data.vehicles["salazarisrael:3"]!.status).toBe("active"); // portal not scanned
   });
 
+  it("never marks a vetoed record gone", () => {
+    const data = emptyStore();
+    upsertVehicle(data, vehicle({ id: "1" }), { now: D1 });
+    data.vehicles["yapo:1"]!.status = "vetoed";
+    expect(markGone(data, new Set(["yapo"]), new Set(), D2)).toBe(0);
+    expect(data.vehicles["yapo:1"]!.status).toBe("vetoed");
+  });
+
+  it("reactivates a vetoed record that reappears and clears its vetoes", () => {
+    const data = emptyStore();
+    upsertVehicle(data, vehicle({ id: "1" }), { now: D1 });
+    data.vehicles["yapo:1"]!.status = "vetoed";
+    data.vehicles["yapo:1"]!.vetoes = ["body-type-mismatch"];
+    upsertVehicle(data, vehicle({ id: "1" }), { now: D2 });
+    expect(data.vehicles["yapo:1"]!.status).toBe("active");
+    expect(data.vehicles["yapo:1"]!.vetoes).toBeUndefined();
+  });
+
   it("keeps a multi-portal record active while one source is still listed", () => {
     const data = emptyStore();
     upsertVehicle(data, vehicle({ plate: "AA1111" }), { now: D1 });
