@@ -5,3 +5,5 @@ data/*
 output/
 *.log
 .DS_Store
+CLAUDE.local.md
+odd/
