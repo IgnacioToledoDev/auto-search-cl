@@ -1,5 +1,6 @@
 import type { Vehicle } from "../lib/vehicle.ts";
 import { effectivePriceClp, locationMatch } from "./filters.ts";
+import { resolveBodyType } from "./bodytype.ts";
 import type { Profile } from "./profile.ts";
 import { containsFolded, fold } from "./text.ts";
 
@@ -160,7 +161,18 @@ function scoreSpec(v: Vehicle, p: Profile): Part {
 
   if (p.makesPreferred.length > 0) check("Make", v.make, (x) => listMatches(x, p.makesPreferred));
   if (p.modelsPreferred.length > 0) check("Model", v.model, (x) => listMatches(x, p.modelsPreferred));
-  if (p.bodyTypes.length > 0) check("Body type", v.bodyType, (x) => listMatches(x, p.bodyTypes));
+  if (p.bodyTypes.length > 0) {
+    criteria++;
+    const body = resolveBodyType(v, p.bodyTypes);
+    const shown = v.bodyType ?? v.model ?? "listed";
+    if (body === "match") {
+      hits += 1;
+      strengths.push(`Body type: ${shown}`);
+    } else if (body === "unknown") {
+      hits += 0.5;
+      gaps.push("Body type unknown");
+    } else gaps.push(`Body type ${shown} not preferred`);
+  }
   if (p.fuels.length > 0) check("Fuel", v.fuel, (x) => listMatches(x, p.fuels));
   if (p.transmissions.length > 0) check("Transmission", v.transmission, (x) => listMatches(x, p.transmissions));
 

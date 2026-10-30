@@ -1,4 +1,5 @@
 import type { Vehicle } from "../lib/vehicle.ts";
+import { resolveBodyType } from "./bodytype.ts";
 import type { Profile } from "./profile.ts";
 import { containsFolded, fold } from "./text.ts";
 
@@ -65,6 +66,12 @@ export function applyHardFilters(v: Vehicle, p: Profile, ufClp?: number | null):
     const loc = locationMatch(v, p);
     if (loc === null) flags.push("location-unknown");
     else if (!loc) vetoes.push("outside-location");
+  }
+
+  if (p.bodyTypeStrict && p.bodyTypes.length > 0) {
+    const body = resolveBodyType(v, p.bodyTypes);
+    if (body === "mismatch") vetoes.push("body-type-mismatch");
+    else if (body === "unknown") flags.push("body-type-unknown");
   }
 
   const text = `${v.title} ${v.description ?? ""}`;

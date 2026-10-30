@@ -87,4 +87,32 @@ describe("applyHardFilters", () => {
     expect(r.pass).toBe(false);
     expect(r.vetoes).toEqual(expect.arrayContaining(["over-budget", "year-too-old"]));
   });
+
+  describe("strict body type", () => {
+    const strict = profile({ bodyTypes: ["SUV"], bodyTypeStrict: true });
+    const soft = profile({ bodyTypes: ["SUV"] });
+    const generic = (make: string, model: string) => vehicle({ make, model, title: `${make} ${model} 2020`, bodyType: "Automovil" });
+
+    it("vetoes known non-SUVs and passes SUVs mislabelled as Automovil", () => {
+      for (const [make, model] of [["Nissan", "Versa"], ["Chevrolet", "Onix"], ["Kia", "Morning"], ["Fiat", "Uno"], ["Toyota", "Aygo"]] as const) {
+        expect(applyHardFilters(generic(make, model), strict).vetoes, model).toContain("body-type-mismatch");
+      }
+      for (const [make, model] of [["Nissan", "Qashqai"], ["Renault", "Duster"], ["Chevrolet", "Tracker"], ["Chevrolet", "Captiva"], ["Chevrolet", "Groove"], ["Opel", "Crossland"], ["Dodge", "Journey"]] as const) {
+        const r = applyHardFilters(generic(make, model), strict);
+        expect(r.vetoes, model).toEqual([]);
+        expect(r.flags, model).toEqual([]);
+      }
+    });
+
+    it("flags, but does not veto, when the body type cannot be determined", () => {
+      const r = applyHardFilters(generic("Foo", "Bar"), strict);
+      expect(r.pass).toBe(true);
+      expect(r.flags).toContain("body-type-unknown");
+    });
+
+    it("does nothing when not strict or when no body types are requested", () => {
+      expect(applyHardFilters(generic("Nissan", "Versa"), soft)).toEqual({ pass: true, vetoes: [], flags: [] });
+      expect(applyHardFilters(generic("Nissan", "Versa"), profile({ bodyTypeStrict: true })).vetoes).toEqual([]);
+    });
+  });
 });

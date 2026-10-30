@@ -114,6 +114,18 @@ describe("scoreVehicle", () => {
     expect(r.gaps.join(" ")).toMatch(/techo solar/);
   });
 
+  it("scores body type through the make/model resolver", () => {
+    const p = profile({ bodyTypes: ["SUV"] });
+    const suv = scoreVehicle(vehicle({ make: "Nissan", model: "Qashqai", bodyType: "Automovil" }), p, ctx());
+    expect(suv.breakdown.spec.points).toBe(25);
+    expect(suv.strengths.join(" ")).toMatch(/body type/i);
+    const hatch = scoreVehicle(vehicle({ make: "Chevrolet", model: "Onix", bodyType: "Automovil" }), p, ctx());
+    expect(hatch.breakdown.spec.points).toBe(0);
+    const unknown = scoreVehicle(vehicle({ make: "Foo", model: "Bar", bodyType: "Automovil" }), p, ctx());
+    expect(unknown.breakdown.spec.points).toBe(12.5);
+    expect(unknown.gaps.join(" ")).toMatch(/body type unknown/i);
+  });
+
   it("scores seller preference and location", () => {
     const p = profile({ sellerTypePreference: "particular", regions: ["Valparaíso"] });
     const r = scoreVehicle(vehicle(), p, ctx());
