@@ -23,7 +23,7 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - [x] T5 Portal CLIs: salazarisrael, brunofritsch (dealers, new + used; both enabled, live-verified); tests
 - [x] T6 Store + matching: seen_vehicles.json, hard filters, weighted scoring rubric, verdict bands; tests
 - [x] T7 Excel exporter (exceljs): all candidates, scores, strengths/gaps, hyperlinks; tests
-- [x] T8 Commands/agents/skills: /setup /scrape /rank /export, vehicle-fetcher, vehicle-scorer, matching rubric doc
+- [x] T8 Commands/agents/skills: /car-setup /car-scrape /car-rank /car-export, vehicle-fetcher, vehicle-scorer, matching rubric doc
 
 ## Acceptance
 - `npx vitest run` green; `npx tsc --noEmit` clean.
@@ -49,7 +49,7 @@ Out: purchase negotiation, financing simulation, auto-contacting sellers.
 - Review: assessment not run (RDD/gentle-ai review not verified); pending.
 
 ## Next step
-All tasks done. Open follow-ups: run /buscar live in Claude Code; parallel ingest write race (lost-update possible); migrate chileautos/yapo to shared listing helpers; decide Salazar Israel robots/UA question; Chileautos/MercadoLibre stay disabled; native review not run; Engram mirror pending.
+All tasks done. Open follow-ups: run /car-buscar live in Claude Code; parallel ingest write race (lost-update possible); migrate chileautos/yapo to shared listing helpers; decide Salazar Israel robots/UA question; Chileautos/MercadoLibre stay disabled; native review not run; Engram mirror pending.
 
 ## Engram mirror
 Pending (ambiguous_project at workspace root; retry from this repo).

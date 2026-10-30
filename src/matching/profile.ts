@@ -13,7 +13,7 @@ export const WeightsSchema = z
   })
   .partial();
 
-/** Buyer profile written by /setup to data/profile.json. */
+/** Buyer profile written by /car-setup to data/profile.json. */
 export const ProfileSchema = z.object({
   condition: z.enum(["nuevo", "usado", "ambos"]),
   budgetMaxClp: z.number().positive(),
@@ -51,7 +51,7 @@ export function loadProfile(path: string = DEFAULT_PROFILE_PATH): Profile {
     raw = readFileSync(path, "utf8");
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-      throw new Error(`Profile not found at ${path}; run /setup to create it`);
+      throw new Error(`Profile not found at ${path}; run /car-setup to create it`);
     }
     throw err;
   }

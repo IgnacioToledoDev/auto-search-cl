@@ -38,10 +38,10 @@ describe("validate-profile", () => {
     expect(e.error).toContain("condition");
   });
 
-  it("reports a missing file and points to /setup", async () => {
+  it("reports a missing file and points to /car-setup", async () => {
     const r = await run(["--file", join(dir, "nope.json")]);
     expect(r.code).toBe(1);
-    expect(JSON.parse(r.err).error).toContain("/setup");
+    expect(JSON.parse(r.err).error).toContain("/car-setup");
   });
 
   it("rejects unknown flags", async () => {

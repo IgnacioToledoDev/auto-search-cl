@@ -4,13 +4,13 @@ argument-hint: [N candidatos a evaluar, por defecto 15] [--rescore]
 allowed-tools: Read, Agent, Bash(npx tsx src/store/cli.ts:*), Bash(npx tsx src/portals/*/cli.ts:*)
 ---
 
-# /rank: ranking y evaluación cualitativa
+# /car-rank: ranking y evaluación cualitativa
 
 Argumentos: `$ARGUMENTS` (N opcional; `--rescore` vuelve a evaluar aunque ya exista evaluación).
 
 ## 1. Ranking determinístico
 
-Ejecuta `npx tsx src/store/cli.ts rank`. Si falla con `PROFILE_ERROR`, pide ejecutar `/setup`.
+Ejecuta `npx tsx src/store/cli.ts rank`. Si falla con `PROFILE_ERROR`, pide ejecutar `/car-setup`.
 
 ## 2. Elegir candidatos
 
@@ -36,7 +36,7 @@ Valida que la respuesta sea JSON con esa forma; descarta lo que no cumpla (el te
 
 `npx tsx src/store/cli.ts set-ai --key <key> --score <0-100> --strengths "a|b" --gaps "c|d"`
 
-(las listas se separan con `|`; agrega las `redFlags` al final de `--gaps` con el prefijo "Alerta: "). Los `gone` y `unreachable` no se guardan: infórmalos (un `gone` probablemente se marcará retirado en el próximo `/scrape`).
+(las listas se separan con `|`; agrega las `redFlags` al final de `--gaps` con el prefijo "Alerta: "). Los `gone` y `unreachable` no se guardan: infórmalos (un `gone` probablemente se marcará retirado en el próximo `/car-scrape`).
 
 ## 5. Re-ranking
 
@@ -44,4 +44,4 @@ Ejecuta `npx tsx src/store/cli.ts rank` otra vez para mezclar el puntaje cualita
 
 ## 6. Informe
 
-Muestra el top 10 con `npx tsx src/store/cli.ts list --format table --min-score 0`, cuántos se evaluaron, cuántos `gone`/`unreachable` y las alertas más graves. Sugiere `/export`.
+Muestra el top 10 con `npx tsx src/store/cli.ts list --format table --min-score 0`, cuántos se evaluaron, cuántos `gone`/`unreachable` y las alertas más graves. Sugiere `/car-export`.

@@ -41,7 +41,7 @@ function num(options: Record<string, string>, name: string, opts: { min: number;
 }
 
 /**
- * Convert "monthly payment x months" into a max price for /setup.
+ * Convert "monthly payment x months" into a max price for /car-setup.
  * Prints `{"budgetMaxClp":n}`; errors go to stderr as `{"error","code"}`.
  */
 export async function main(argv: string[], io: Io = { stdout: process.stdout, stderr: process.stderr }): Promise<number> {

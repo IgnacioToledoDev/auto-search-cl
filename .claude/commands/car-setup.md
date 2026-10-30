@@ -3,7 +3,7 @@ description: Entrevista al comprador y guarda su perfil en data/profile.json (va
 allowed-tools: Read, Write, Edit, Bash(npx tsx src/matching/validate-profile.ts:*), Bash(npx tsx src/matching/budget-from-payment.ts:*)
 ---
 
-# /setup: perfil del comprador
+# /car-setup: perfil del comprador
 
 Tu tarea es conocer qué vehículo busca el usuario y dejar su perfil guardado y validado.
 
@@ -38,4 +38,4 @@ Tu tarea es conocer qué vehículo busca el usuario y dejar su perfil guardado y
 2. Escribe `data/profile.json` con Write. El formato de referencia es `data/profile.example.json`.
 3. Valida: `npx tsx src/matching/validate-profile.ts`. Si devuelve `{"ok":true,...}` sigue; si devuelve un error, corrige el campo indicado con el usuario y vuelve a validar. Nunca dejes un perfil inválido.
 4. Completa la sección "Perfil del comprador" de `CLAUDE.md` reemplazando cada `[PLACEHOLDER...]` por la respuesta del usuario (o "indiferente" si no aplica), con Edit.
-5. Termina con un resumen del perfil y la sugerencia de ejecutar `/buscar` (o `/scrape`).
+5. Termina con un resumen del perfil y la sugerencia de ejecutar `/car-buscar` (o `/car-scrape`).

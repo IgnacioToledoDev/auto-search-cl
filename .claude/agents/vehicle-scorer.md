@@ -1,6 +1,6 @@
 ---
 name: vehicle-scorer
-description: Assesses the qualitative fit of ONE or a few vehicle candidates by reading each portal detail page, and returns strict JSON. Use from /rank in batches.
+description: Assesses the qualitative fit of ONE or a few vehicle candidates by reading each portal detail page, and returns strict JSON. Use from /car-rank in batches.
 tools: Bash(npx tsx src/portals/*/cli.ts:*), Bash(npx tsx src/store/cli.ts list:*)
 model: sonnet
 ---

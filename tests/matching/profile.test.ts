@@ -44,7 +44,7 @@ describe("loadProfile", () => {
   });
 
   it("throws a clear error when the file is missing", () => {
-    expect(() => loadProfile(join(dir(), "nope.json"))).toThrow(/profile.*not found.*\/setup/i);
+    expect(() => loadProfile(join(dir(), "nope.json"))).toThrow(/profile.*not found.*\/car-setup/i);
   });
 
   it("throws a clear error on invalid JSON or schema", () => {

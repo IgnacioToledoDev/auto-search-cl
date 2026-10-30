@@ -4,14 +4,14 @@ argument-hint: [portal opcional]
 allowed-tools: Read, Glob, Agent, WebSearch, Write, Edit, Bash(npx tsx src/portals/*/cli.ts:*), Bash(npx tsx src/store/cli.ts:*), Bash(npx tsx src/export/cli.ts:*), Bash(npx tsx src/matching/validate-profile.ts:*)
 ---
 
-# /buscar: de punta a punta
+# /car-buscar: de punta a punta
 
-Ejecuta en orden, sin pedir permiso entre pasos (solo `/setup` hace preguntas):
+Ejecuta en orden, sin pedir permiso entre pasos (solo `/car-setup` hace preguntas):
 
-1. **Perfil**: si no existe `data/profile.json` (o `npx tsx src/matching/validate-profile.ts` falla), sigue las instrucciones de `.claude/commands/setup.md` (`/setup`) hasta tenerlo.
-2. **Scrape**: sigue `.claude/commands/scrape.md` (`/scrape`), pasando `$ARGUMENTS` si el usuario eligió un portal.
-3. **Rank**: sigue `.claude/commands/rank.md` (`/rank`).
-4. **Export**: sigue `.claude/commands/export.md` (`/export`).
+1. **Perfil**: si no existe `data/profile.json` (o `npx tsx src/matching/validate-profile.ts` falla), sigue las instrucciones de `.claude/commands/car-setup.md` (`/car-setup`) hasta tenerlo.
+2. **Scrape**: sigue `.claude/commands/car-scrape.md` (`/car-scrape`), pasando `$ARGUMENTS` si el usuario eligió un portal.
+3. **Rank**: sigue `.claude/commands/car-rank.md` (`/car-rank`).
+4. **Export**: sigue `.claude/commands/car-export.md` (`/car-export`).
 
 ## Resumen final
 

@@ -22,11 +22,11 @@ Completa cada `[PLACEHOLDER]` antes de buscar.
 
 ## Flujo de trabajo
 
-1. `/setup`: completar el perfil de arriba.
-2. `/scrape`: ejecutar los CLIs de cada portal
+1. `/car-setup`: completar el perfil de arriba.
+2. `/car-scrape`: ejecutar los CLIs de cada portal
    (`npx tsx src/portals/<portal>/cli.ts ...`) y guardar resultados en `data/`.
-3. `/rank`: aplicar filtros duros y puntaje ponderado; asignar veredicto.
-4. `/export`: generar el Excel en `output/` con todos los candidatos.
+3. `/car-rank`: aplicar filtros duros y puntaje ponderado; asignar veredicto.
+4. `/car-export`: generar el Excel en `output/` con todos los candidatos.
 
 Los CLIs rechazan flags desconocidos y fallan con código 1 y un JSON
 `{"error","code"}` en stderr.

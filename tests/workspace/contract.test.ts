@@ -24,7 +24,7 @@ function referencedScripts(md: string): string[] {
   return [...found];
 }
 
-const COMMANDS = ["setup", "scrape", "rank", "export", "buscar"];
+const COMMANDS = ["car-setup", "car-scrape", "car-rank", "car-export", "car-buscar"];
 const AGENTS = ["vehicle-fetcher", "vehicle-scorer"];
 
 describe("commands", () => {
@@ -53,28 +53,28 @@ describe("commands", () => {
     }
   });
 
-  it("scrape documents --portals handling and the portal discovery source", () => {
-    const md = read(".claude/commands/scrape.md");
+  it("car-scrape documents --portals handling and the portal discovery source", () => {
+    const md = read(".claude/commands/car-scrape.md");
     expect(md).toContain("--portals");
     expect(md).toContain("src/portals/*/SKILL.md");
     expect(md).toContain("vehicle-fetcher");
     expect(md).toContain("store/cli.ts ingest");
   });
 
-  it("rank dispatches scorers and stores results with set-ai", () => {
-    const md = read(".claude/commands/rank.md");
+  it("car-rank dispatches scorers and stores results with set-ai", () => {
+    const md = read(".claude/commands/car-rank.md");
     expect(md).toContain("vehicle-scorer");
     expect(md).toContain("set-ai");
     expect(md).toContain("store/cli.ts rank");
   });
 
-  it("buscar chains setup, scrape, rank and export", () => {
-    const md = read(".claude/commands/buscar.md");
-    for (const step of ["/setup", "/scrape", "/rank", "/export"]) expect(md).toContain(step);
+  it("car-buscar chains setup, scrape, rank and export", () => {
+    const md = read(".claude/commands/car-buscar.md");
+    for (const step of ["/car-setup", "/car-scrape", "/car-rank", "/car-export"]) expect(md).toContain(step);
   });
 
-  it("setup validates the profile with the validator script", () => {
-    expect(read(".claude/commands/setup.md")).toContain("src/matching/validate-profile.ts");
+  it("car-setup validates the profile with the validator script", () => {
+    expect(read(".claude/commands/car-setup.md")).toContain("src/matching/validate-profile.ts");
   });
 });
 
@@ -137,6 +137,6 @@ describe("skill and docs", () => {
   it("README documents the flow and honest limitations", () => {
     const md = read("README.md");
     expect(md).toMatch(/## Limitaciones/);
-    for (const term of ["Chileautos", "DataDome", "Mercado Libre", "ClaudeBot", "/buscar"]) expect(md, term).toContain(term);
+    for (const term of ["Chileautos", "DataDome", "Mercado Libre", "ClaudeBot", "/car-buscar"]) expect(md, term).toContain(term);
   });
 });

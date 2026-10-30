@@ -6,21 +6,21 @@ perfil y te entrega todos los candidatos en un Excel.
 
 ## Cómo funciona
 
-1. **Perfil** (`/setup`): una entrevista, una pregunta a la vez, guarda
+1. **Perfil** (`/car-setup`): una entrevista, una pregunta a la vez, guarda
    `data/profile.json` (validado con `npx tsx src/matching/validate-profile.ts`)
    y completa la sección de perfil de `CLAUDE.md`.
-2. **Scrape** (`/scrape`): lee `src/portals/*/SKILL.md`, escanea en paralelo los
+2. **Scrape** (`/car-scrape`): lee `src/portals/*/SKILL.md`, escanea en paralelo los
    portales con `enabled: true` mediante agentes `vehicle-fetcher` y carga cada
    resultado en `data/seen_vehicles.json` (`store ingest`), aplicando filtros
    duros (presupuesto, año, km, ubicación, deal-breakers).
-3. **Ranking** (`/rank`): puntaje determinístico (precio, especificaciones,
+3. **Ranking** (`/car-rank`): puntaje determinístico (precio, especificaciones,
    condición, vendedor) y evaluación cualitativa de los mejores candidatos por
    agentes `vehicle-scorer` (mezcla 70% / 30%). Veredictos: Strong, Good,
    Moderate, Weak, Poor. Detalle en `.claude/skills/vehicle-matching/`.
-4. **Export** (`/export`): `output/candidatos.xlsx` con las hojas `Candidatos`,
+4. **Export** (`/car-export`): `output/candidatos.xlsx` con las hojas `Candidatos`,
    `Resumen` e `Historial de precios`.
 
-Todo en un paso: **`/buscar`** (perfil si falta, scrape, ranking, Excel y resumen
+Todo en un paso: **`/car-buscar`** (perfil si falta, scrape, ranking, Excel y resumen
 del top 5).
 
 Portales: Yapo, Salazar Israel y Bruno Fritsch (habilitados); Chileautos y
@@ -70,7 +70,7 @@ escaneo filtrado se usa `--portals none` para no marcar nada.
 - Los filtros se aplican en parte del lado del cliente sobre la página pedida,
   por lo que un escaneo no recorre todo el stock del portal.
 - Los agentes `vehicle-fetcher` en paralelo escriben el mismo archivo de store;
-  `/scrape` lo reconcilia, pero una actualización perdida es posible.
+  `/car-scrape` lo reconcilia, pero una actualización perdida es posible.
 - Los datos son de **avisos públicos**: verifica siempre con el vendedor
   (patente, padrón, permiso de circulación, revisión técnica, SOAP).
 

@@ -4,13 +4,13 @@ argument-hint: [portal opcional, ej. yapo]
 allowed-tools: Read, Glob, Agent, WebSearch, Bash(npx tsx src/portals/*/cli.ts:*), Bash(npx tsx src/store/cli.ts:*)
 ---
 
-# /scrape: buscar avisos
+# /car-scrape: buscar avisos
 
 Argumento opcional: `$ARGUMENTS` (nombre de un portal para escanear solo ese).
 
 ## 1. Perfil
 
-Lee `data/profile.json`. Si no existe, avisa que falta y ejecuta `/setup` primero (no inventes un perfil).
+Lee `data/profile.json`. Si no existe, avisa que falta y ejecuta `/car-setup` primero (no inventes un perfil).
 
 ## 2. Descubrir portales
 
@@ -52,4 +52,4 @@ Solo si el usuario lo acepta y para portales deshabilitados o bloqueados, puedes
 
 ## 8. Informe
 
-Entrega una tabla corta por portal con `new`, `updated`, `vetoed`, `flagged`, `gone` (suma por portal), portales omitidos con su motivo, errores y avisos sospechosos que detectaron los agentes. Sugiere `/rank`.
+Entrega una tabla corta por portal con `new`, `updated`, `vetoed`, `flagged`, `gone` (suma por portal), portales omitidos con su motivo, errores y avisos sospechosos que detectaron los agentes. Sugiere `/car-rank`.
