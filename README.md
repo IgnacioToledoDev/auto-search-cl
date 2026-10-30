@@ -47,9 +47,9 @@ Portales habilitados: **Yapo**, **Salazar Israel** y **Bruno Fritsch**. **Chilea
 
 ## ¿Funciona?
 
-El proyecto tiene 404 tests (`npm test`) y typecheck limpio. Cada portal tiene su CLI, su parser y sus tests contra páginas de muestra. En una búsqueda real de SUV usado en el sur de Chile, el flujo cargó 23 avisos, evaluó los 15 mejores con agentes y exportó el Excel.
+El proyecto tiene 408 tests (`npm test`) y typecheck limpio. Cada portal tiene su CLI, su parser y sus tests contra páginas de muestra. El flujo completo (perfil, scrape, ranking con agentes y exportación a Excel) se ejecuta de punta a punta con `/car-buscar`.
 
-También encontró fallas propias que quedaron corregidas y documentadas: la carrocería era solo una preferencia blanda y dejaba pasar sedanes y hatchbacks, y los vetos solo corrían al ingresar avisos, no al volver a rankear. Detalle en [`odd/tasks/`](odd/tasks/).
+También encontró fallas propias que quedaron corregidas y documentadas: la carrocería era solo una preferencia blanda y dejaba pasar sedanes y hatchbacks, y los vetos solo corrían al ingresar avisos, no al volver a rankear.
 
 ## Inicio rápido
 
@@ -90,7 +90,7 @@ Escanea los portales habilitados, puntúa los mejores candidatos, genera el Exce
 
 | Comando | Qué hace |
 |---|---|
-| **`/car-setup`** | Entrevista al comprador y guarda el perfil validado |
+| **`/car-setup`** | Entrevista al comprador y guarda el perfil validado (`data/profile.json` y `CLAUDE.local.md`, ambos fuera de git) |
 | **`/car-scrape`** | Escanea en paralelo los portales habilitados con agentes `vehicle-fetcher` |
 | **`/car-rank`** | Re-aplica los filtros duros, puntúa y pide evaluación cualitativa de los mejores |
 | **`/car-export`** | Genera `output/candidatos.xlsx` (`Candidatos`, `Resumen`, `Historial de precios`) |
